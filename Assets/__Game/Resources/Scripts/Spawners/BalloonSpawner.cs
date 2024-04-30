@@ -30,6 +30,8 @@ namespace Assets.__Game.Resources.Scripts.Spawners
     private List<BalloonHandler> _correctNumbersBalloonHandlers = new List<BalloonHandler>();
     private List<BalloonHandler> _incorrectNumbersBalloonHandlers = new List<BalloonHandler>();
 
+    private EventBinding<EventStructs.BalloonReMovementEvent> _balloonReMovementEvent;
+
     private void Awake()
     {
       _randomPositionGenerator = new RandomScreenPositionGenerator(Camera.main);
@@ -37,9 +39,19 @@ namespace Assets.__Game.Resources.Scripts.Spawners
       SpawnAllBalloons();
     }
 
+    private void OnEnable()
+    {
+      _balloonReMovementEvent = new EventBinding<EventStructs.BalloonReMovementEvent>(RemoveFromMovingBalloons);
+    }
+
+    private void OnDisable()
+    {
+      _balloonReMovementEvent.Remove(RemoveFromMovingBalloons);
+    }
+
     private void Start()
     {
-      StartCoroutine(ActivateBalloonMovement());
+      StartCoroutine(DoActivateBalloonMovement());
     }
 
     private void SpawnAllBalloons()
@@ -74,6 +86,13 @@ namespace Assets.__Game.Resources.Scripts.Spawners
         }
       }
 
+      StartCoroutine(DoRaiseBalloonSpawnedEvent());
+    }
+
+    private IEnumerator DoRaiseBalloonSpawnedEvent()
+    {
+      yield return new WaitForEndOfFrame();
+
       EventBus<EventStructs.BalloonSpawnerEvent>.Raise(new EventStructs.BalloonSpawnerEvent
       {
         CorrectBalloonHandlers = _correctNumbersBalloonHandlers,
@@ -83,7 +102,7 @@ namespace Assets.__Game.Resources.Scripts.Spawners
       });
     }
 
-    private IEnumerator ActivateBalloonMovement()
+    private IEnumerator DoActivateBalloonMovement()
     {
       while (true)
       {
@@ -102,6 +121,11 @@ namespace Assets.__Game.Resources.Scripts.Spawners
 
         yield return new WaitForSeconds(randomDelay);
       }
+    }
+
+    private void RemoveFromMovingBalloons(EventStructs.BalloonReMovementEvent balloonReMovementEvent)
+    {
+      _movingBalloons.Remove(balloonReMovementEvent.BalloonController);
     }
 
     private bool ArrayContains(int[] array, int number)

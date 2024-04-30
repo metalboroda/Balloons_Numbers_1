@@ -1,3 +1,4 @@
+using __Game.Resources.Scripts.EventBus;
 using DG.Tweening;
 using UnityEngine;
 
@@ -6,7 +7,17 @@ namespace Assets.__Game.Resources.Scripts.Balloon
   public class BalloonMovement : MonoBehaviour
   {
     private float _movementSpeed;
+    private Vector3 _initPosition;
     private Vector3 _movementTarget;
+
+    private BalloonController _balloonController;
+
+    private void Awake()
+    {
+      _balloonController = GetComponent<BalloonController>();
+
+      _initPosition = transform.position;
+    }
 
     public void SetMovementSpeed(float movementSpeed)
     {
@@ -22,8 +33,12 @@ namespace Assets.__Game.Resources.Scripts.Balloon
     {
       transform.DOMove(_movementTarget, _movementSpeed).SetSpeedBased(true).OnComplete(() =>
       {
-        DOTween.Kill(transform);
-        Destroy(gameObject);
+        EventBus<EventStructs.BalloonReMovementEvent>.Raise(new EventStructs.BalloonReMovementEvent
+        {
+          BalloonController = _balloonController
+        });
+
+        transform.DOMove(_initPosition, 0);
       });
     }
   }

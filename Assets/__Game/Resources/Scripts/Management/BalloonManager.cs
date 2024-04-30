@@ -81,7 +81,7 @@ namespace Assets.__Game.Resources.Scripts.Management
             IncorrectBalloonIncrement = 1
           });
 
-          Debug.Log("Correct");
+          Debug.Log("Incorrect");
 
           break;
         }
@@ -92,7 +92,7 @@ namespace Assets.__Game.Resources.Scripts.Management
 
     private void CheckFishLists()
     {
-      if (_gameBootstrapper == null) return;
+      //if (_gameBootstrapper == null) return;
       if (_correctBalloonNumbers.Count == 0)
       {
         //_gameBootstrapper.StateMachine.ChangeState(new GameWinState(_gameBootstrapper));

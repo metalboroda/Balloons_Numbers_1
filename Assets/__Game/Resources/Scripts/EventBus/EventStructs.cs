@@ -45,6 +45,11 @@ namespace __Game.Resources.Scripts.EventBus
       public BalloonHandler BalloonHandler;
     }
 
+    public struct BalloonReMovementEvent : IEvent
+    {
+      public BalloonController BalloonController;
+    }
+
     public struct BalloonDestroyEvent : IEvent
     {
       public int BalloonId;
