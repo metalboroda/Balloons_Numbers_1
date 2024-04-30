@@ -476,19 +476,25 @@ MonoBehaviour:
   _topOffset: 1.5
   _bottomOffset: 2.5
   _tutorial: 0
-  _correctNumbersContainerSo: {fileID: 11400000, guid: 9aa5be5d6b4e98a4db90a35c2d34bc04, type: 2}
+  _correctNumbersContainerSo: {fileID: 11400000, guid: 217846e4a1f878c439a55c7b1d7bf5f5, type: 2}
   _balloonSpawnInfos:
   - BalloonContainerSo: {fileID: 11400000, guid: a96dc79e5850e2640a99a1455e501715, type: 2}
-    BalloonNumber: 1
+    BalloonValue: 1
     Amount: 4
   - BalloonContainerSo: {fileID: 11400000, guid: a96dc79e5850e2640a99a1455e501715, type: 2}
-    BalloonNumber: 2
+    BalloonValue: 2
     Amount: 1
   - BalloonContainerSo: {fileID: 11400000, guid: a96dc79e5850e2640a99a1455e501715, type: 2}
-    BalloonNumber: 3
+    BalloonValue: 3
     Amount: 1
   - BalloonContainerSo: {fileID: 11400000, guid: a96dc79e5850e2640a99a1455e501715, type: 2}
-    BalloonNumber: 4
+    BalloonValue: 4
+    Amount: 1
+  - BalloonContainerSo: {fileID: 11400000, guid: a96dc79e5850e2640a99a1455e501715, type: 2}
+    BalloonValue: 5
+    Amount: 1
+  - BalloonContainerSo: {fileID: 11400000, guid: a96dc79e5850e2640a99a1455e501715, type: 2}
+    BalloonValue: 6
     Amount: 1
 --- !u!1 &1724678910
 GameObject:
@@ -534,7 +540,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce542f6b9cc01b8419a20cf7ad8c22ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _correctNumbersContainerSo: {fileID: 11400000, guid: 9aa5be5d6b4e98a4db90a35c2d34bc04, type: 2}
+  _correctNumbersContainerSo: {fileID: 11400000, guid: 217846e4a1f878c439a55c7b1d7bf5f5, type: 2}
 --- !u!1 &1746051439
 GameObject:
   m_ObjectHideFlags: 0

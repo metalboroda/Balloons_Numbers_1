@@ -9,7 +9,7 @@ namespace Assets.__Game.Resources.Scripts.Management
 {
   public class BalloonManager : MonoBehaviour
   {
-    [SerializeField] private CorrectNumbersContainerSo _correctNumbersContainerSo;
+    [SerializeField] private CorrectValuesContainerSo _correctNumbersContainerSo;
 
     private List<BalloonHandler> _correctBalloonNumbers = new();
     private List<BalloonHandler> _incorrectBalloonNumbers = new();
@@ -40,7 +40,7 @@ namespace Assets.__Game.Resources.Scripts.Management
     {
       EventBus<EventStructs.BalloonReceiveEvent>.Raise(new EventStructs.BalloonReceiveEvent
       {
-        CorrectNumbers = _correctNumbersContainerSo.CorrectNumbers
+        CorrectValues = _correctNumbersContainerSo.CorrectValues
       });
     }
 
@@ -52,7 +52,7 @@ namespace Assets.__Game.Resources.Scripts.Management
 
     private void ReceiveBalloon(EventStructs.BalloonClickEvent balloonClickEvent)
     {
-      foreach (int number in _correctNumbersContainerSo.CorrectNumbers)
+      foreach (string value in _correctNumbersContainerSo.CorrectValues)
       {
         if (_correctBalloonNumbers.Contains(balloonClickEvent.BalloonHandler))
         {

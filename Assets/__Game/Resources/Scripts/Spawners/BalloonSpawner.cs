@@ -22,7 +22,7 @@ namespace Assets.__Game.Resources.Scripts.Spawners
     [Space]
     [SerializeField] private bool _tutorial;
     [Space]
-    [SerializeField] private CorrectNumbersContainerSo _correctNumbersContainerSo;
+    [SerializeField] private CorrectValuesContainerSo _correctNumbersContainerSo;
     [Space]
     [SerializeField] private BalloonSpawnInfo[] _balloonSpawnInfos;
 
@@ -72,9 +72,9 @@ namespace Assets.__Game.Resources.Scripts.Spawners
 
           _spawnedBalloons.Add(balloonController);
 
-          bool correct = ArrayContains(_correctNumbersContainerSo.CorrectNumbers, balloonInfo.BalloonNumber);
+          bool correct = ArrayContains(_correctNumbersContainerSo.CorrectValues, balloonInfo.BalloonValue);
 
-          balloonHandler.SetBalloonDetails(balloonInfo.BalloonNumber, correct, _tutorial);
+          balloonHandler.SetBalloonDetails(balloonInfo.BalloonValue, correct, _tutorial);
 
           if (correct == true)
             _correctNumbersBalloonHandlers.Add(balloonHandler);
@@ -131,9 +131,9 @@ namespace Assets.__Game.Resources.Scripts.Spawners
       _movingBalloons.Remove(balloonReMovementEvent.BalloonController);
     }
 
-    private bool ArrayContains(int[] array, int number)
+    private bool ArrayContains(string[] array, string value)
     {
-      return array.Contains(number);
+      return array.Contains(value);
     }
   }
 }

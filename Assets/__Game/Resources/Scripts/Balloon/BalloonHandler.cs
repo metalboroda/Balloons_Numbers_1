@@ -7,13 +7,13 @@ namespace Assets.__Game.Resources.Scripts.Balloon
 {
   public class BalloonHandler : MonoBehaviour, IPointerClickHandler
   {
-    private int _balloonNumber;
+    private string _balloonValue;
     private bool _correct; 
 
-    public int BalloonNumber
+    public string BalloonValue
     {
-      get => _balloonNumber;
-      private set => _balloonNumber = value;
+      get => _balloonValue;
+      private set => _balloonValue = value;
     }
 
     public bool Correct
@@ -22,15 +22,15 @@ namespace Assets.__Game.Resources.Scripts.Balloon
       private set => _correct = value;
     }
 
-    public void SetBalloonDetails(int number, bool correct, bool tutorial = false)
+    public void SetBalloonDetails(string value, bool correct, bool tutorial = false)
     {
-      _balloonNumber = number;
+      _balloonValue = value;
       _correct = correct;
 
       EventBus<EventStructs.BalloonUiEvent>.Raise(new EventStructs.BalloonUiEvent
       {
         BalloonId = transform.GetInstanceID(),
-        BalloonNumber = _balloonNumber,
+        BalloonValue = _balloonValue,
         Correct = _correct,
         Tutorial = tutorial
       });
@@ -41,7 +41,7 @@ namespace Assets.__Game.Resources.Scripts.Balloon
       EventBus<EventStructs.BalloonClickEvent>.Raise(new EventStructs.BalloonClickEvent
       {
         BalloonHandler = this,
-        BalloonNumber = _balloonNumber
+        BalloonValue = _balloonValue
       });
     }
 

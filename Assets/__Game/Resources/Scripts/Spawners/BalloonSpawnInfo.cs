@@ -10,7 +10,7 @@ namespace Assets.__Game.Resources.Scripts.Spawners
     public BalloonContainerSo BalloonContainerSo;
 
     [Space]
-    public int BalloonNumber;
+    public string BalloonValue;
     public int Amount;
   }
 }

@@ -26,7 +26,7 @@ namespace __Game.Resources.Scripts.EventBus
     public struct BalloonReceiveEvent : IEvent
     {
       public bool CorrectBalloon;
-      public int[] CorrectNumbers;
+      public string[] CorrectValues;
       public int CorrectBalloonIncrement;
       public int IncorrectBalloonIncrement;
     }
@@ -36,14 +36,14 @@ namespace __Game.Resources.Scripts.EventBus
     public struct BalloonUiEvent : IEvent
     {
       public int BalloonId;
-      public int BalloonNumber;
+      public string BalloonValue;
       public bool Correct;
       public bool Tutorial;
     }
 
     public struct BalloonClickEvent : IEvent
     {
-      public int BalloonNumber;
+      public string BalloonValue;
       public BalloonHandler BalloonHandler;
     }
 

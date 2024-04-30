@@ -31,7 +31,7 @@ namespace Assets.__Game.Resources.Scripts.Balloon
     {
       if (balloonUiEvent.BalloonId != transform.GetInstanceID()) return;
 
-      _numberText.SetText(balloonUiEvent.BalloonNumber.ToString());
+      _numberText.SetText(balloonUiEvent.BalloonValue.ToString());
     }
 
     private void SetTutorialGlowingColor(EventStructs.BalloonUiEvent balloonUiEvent)
