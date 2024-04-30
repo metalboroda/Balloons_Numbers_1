@@ -1,8 +1,11 @@
-﻿using Assets.__Game.Resources.Scripts.Balloon;
-using Assets.__Game.Resources.Scripts.Tools;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+using Assets.__Game.Resources.Scripts.Balloon;
+using Assets.__Game.Resources.Scripts.SOs;
+using Assets.__Game.Resources.Scripts.Tools;
+using __Game.Resources.Scripts.EventBus;
+using System.Linq;
 
 namespace Assets.__Game.Resources.Scripts.Spawners
 {
@@ -11,86 +14,104 @@ namespace Assets.__Game.Resources.Scripts.Spawners
     [Header("Spawn")]
     [SerializeField] private float _minSpawnRate;
     [SerializeField] private float _maxSpawnRate;
-    [SerializeField] private float _bottomOffset;
     [Header("Movement")]
     [SerializeField] private float _minMovementSpeed;
     [SerializeField] private float _maxMovementSpeed;
     [SerializeField] private float _topOffset;
+    [SerializeField] private float _bottomOffset;
+    [Space]
+    [SerializeField] private CorrectNumbersContainerSo _correctNumbersContainerSo;
     [Space]
     [SerializeField] private BalloonSpawnInfo[] _balloonSpawnInfos;
 
     private RandomScreenPositionGenerator _randomPositionGenerator;
-    private List<BalloonSpawnInfo> _balloonPool;
+    private List<BalloonController> _spawnedBalloons = new List<BalloonController>();
+    private List<BalloonController> _movingBalloons = new List<BalloonController>();
+    private List<BalloonHandler> _correctNumbersBalloonHandlers = new List<BalloonHandler>();
+    private List<BalloonHandler> _incorrectNumbersBalloonHandlers = new List<BalloonHandler>();
 
     private void Awake()
     {
       _randomPositionGenerator = new RandomScreenPositionGenerator(Camera.main);
 
-      InitializeBalloonPool();
+      SpawnAllBalloons();
     }
 
     private void Start()
     {
-      StartCoroutine(DoSpawnBalloons());
+      StartCoroutine(ActivateBalloonMovement());
     }
 
-    private void InitializeBalloonPool()
+    private void SpawnAllBalloons()
     {
-      _balloonPool = new List<BalloonSpawnInfo>();
-
-      foreach (var info in _balloonSpawnInfos)
+      foreach (var balloonInfo in _balloonSpawnInfos)
       {
-        for (int i = 0; i < info.Amount; i++)
+        for (int i = 0; i < balloonInfo.Amount; i++)
         {
-          _balloonPool.Add(info);
+          Vector3 spawnPosition = _randomPositionGenerator.GetRandomXPosition();
+
+          spawnPosition.y = _randomPositionGenerator.GetBottomYPosition() - _bottomOffset;
+
+          BalloonController balloonController = Instantiate(
+              balloonInfo.BalloonContainerSo.GetRandomBalloon(), spawnPosition, Quaternion.identity).GetComponent<BalloonController>();
+          BalloonHandler balloonHandler = balloonController.BalloonHandler;
+          BalloonMovement balloonMovement = balloonController.BalloonMovement;
+
+          _spawnedBalloons.Add(balloonController);
+
+          balloonHandler.SetBalloonNumber(balloonInfo.BalloonNumber);
+
+          float randomSpeed = Random.Range(_minMovementSpeed, _maxMovementSpeed);
+
+          balloonMovement.SetMovementSpeed(randomSpeed);
+          balloonMovement.SetMovementTarget(
+              _randomPositionGenerator.GetRandomXPosition(), _randomPositionGenerator.GetTopYPosition(), _topOffset);
+
+          if (ArrayContains(_correctNumbersContainerSo.CorrectNumbers, balloonInfo.BalloonNumber))
+            _correctNumbersBalloonHandlers.Add(balloonHandler);
+          else
+            _incorrectNumbersBalloonHandlers.Add(balloonHandler);
         }
       }
+
+      EventBus<EventStructs.BalloonSpawnerEvent>.Raise(new EventStructs.BalloonSpawnerEvent
+      {
+        CorrectBalloonHandlers = _correctNumbersBalloonHandlers,
+        CorrectBalloonCount = _correctNumbersBalloonHandlers.Count,
+        IncorrectBalloonhHandlers = _incorrectNumbersBalloonHandlers,
+        IncorrectBalloonCount = _incorrectNumbersBalloonHandlers.Count
+      });
     }
 
-    private IEnumerator DoSpawnBalloons()
+    private IEnumerator ActivateBalloonMovement()
     {
-      while (_balloonPool.Count > 0)
+      while (true)
       {
-        float randomSpawnRate = Random.Range(_minSpawnRate, _maxSpawnRate);
+        List<BalloonController> availableBalloons = _spawnedBalloons.Except(_movingBalloons).ToList();
 
-        yield return new WaitForSeconds(randomSpawnRate);
+        if (availableBalloons.Count > 0)
+        {
+          int randomIndex = Random.Range(0, availableBalloons.Count);
+          BalloonController selectedBalloon = availableBalloons[randomIndex];
 
-        SpawnRandomBalloon();
+          _movingBalloons.Add(selectedBalloon);
+          selectedBalloon.BalloonMovement.MoveToTarget();
+        }
+
+        float randomDelay = Random.Range(_minSpawnRate, _maxSpawnRate);
+
+        yield return new WaitForSeconds(randomDelay);
       }
     }
 
-    private void SpawnRandomBalloon()
+    private bool ArrayContains(int[] array, int number)
     {
-      if (_balloonPool.Count > 0)
+      foreach (int num in array)
       {
-        int randomIndex = Random.Range(0, _balloonPool.Count);
-        BalloonSpawnInfo selectedInfo = _balloonPool[randomIndex];
-
-        SpawnBalloon(selectedInfo);
-
-        _balloonPool.RemoveAt(randomIndex);
+        if (num == number) return true;
       }
-    }
 
-
-    private void SpawnBalloon(BalloonSpawnInfo balloonInfo)
-    {
-      Vector3 spawnPosition = _randomPositionGenerator.GetRandomXPosition();
-      float randomSpeed = Random.Range(_minMovementSpeed, _maxMovementSpeed);
-
-      spawnPosition.y = _randomPositionGenerator.GetBottomYPosition() - _bottomOffset;
-
-      BalloonController balloonController = Instantiate(
-        balloonInfo.BalloonContainerSo.GetRandomBalloon(), spawnPosition, Quaternion.identity).GetComponent<BalloonController>();
-      BalloonHandler balloonHandler = balloonController.BalloonHandler;
-      BalloonMovement balloonMovement = balloonController.BalloonMovement;
-
-      balloonHandler.SetBalloonNumber(balloonInfo.BalloonNumber);
-
-      balloonMovement.SetMovementSpeed(randomSpeed);
-      balloonMovement.SetMovementTarget(
-        _randomPositionGenerator.GetRandomXPosition(), _randomPositionGenerator.GetTopYPosition(), _topOffset);
-      balloonMovement.MoveToTarget();
+      return false;
     }
   }
 }

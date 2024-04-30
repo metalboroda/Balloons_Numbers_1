@@ -1,3 +1,4 @@
+using Assets.__Game.Resources.Scripts.Balloon;
 using UnityEngine;
 
 namespace Assets.__Game.Resources.Scripts.SOs
@@ -5,17 +6,17 @@ namespace Assets.__Game.Resources.Scripts.SOs
   [CreateAssetMenu(fileName = "BalloonContainer", menuName = "SOs/Containers/BalloonContainer")]
   public class BalloonContainerSo : ScriptableObject
   {
-    [SerializeField] private GameObject[] _balloons;
+    [SerializeField] private BalloonHandler[] _balloons;
 
     private int _lastIndex = -1;
 
-    public GameObject[] Balloons
+    public BalloonHandler[] Balloons
     {
       get => _balloons;
       private set => _balloons = value;
     }
 
-    public GameObject GetRandomBalloon()
+    public BalloonHandler GetRandomBalloon()
     {
       if (_balloons == null || _balloons.Length == 0) return null;
       if (_balloons.Length == 1) return _balloons[0];

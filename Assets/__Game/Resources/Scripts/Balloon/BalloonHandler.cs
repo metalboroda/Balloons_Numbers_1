@@ -17,8 +17,6 @@ namespace Assets.__Game.Resources.Scripts.Balloon
 
     public void OnPointerClick(PointerEventData eventData)
     {
-      Debug.Log($"{name} Clicked");
-
       EventBus<EventStructs.BalloonClickEvent>.Raise(new EventStructs.BalloonClickEvent
       {
         BalloonHandler = this,
