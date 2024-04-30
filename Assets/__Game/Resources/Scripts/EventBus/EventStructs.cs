@@ -37,6 +37,8 @@ namespace __Game.Resources.Scripts.EventBus
     {
       public int BalloonId;
       public int BalloonNumber;
+      public bool Correct;
+      public bool Tutorial;
     }
 
     public struct BalloonClickEvent : IEvent

@@ -475,6 +475,7 @@ MonoBehaviour:
   _maxMovementSpeed: 2.5
   _topOffset: 1.5
   _bottomOffset: 2.5
+  _tutorial: 0
   _correctNumbersContainerSo: {fileID: 11400000, guid: 9aa5be5d6b4e98a4db90a35c2d34bc04, type: 2}
   _balloonSpawnInfos:
   - BalloonContainerSo: {fileID: 11400000, guid: a96dc79e5850e2640a99a1455e501715, type: 2}

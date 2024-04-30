@@ -20,6 +20,8 @@ namespace Assets.__Game.Resources.Scripts.Spawners
     [SerializeField] private float _topOffset;
     [SerializeField] private float _bottomOffset;
     [Space]
+    [SerializeField] private bool _tutorial;
+    [Space]
     [SerializeField] private CorrectNumbersContainerSo _correctNumbersContainerSo;
     [Space]
     [SerializeField] private BalloonSpawnInfo[] _balloonSpawnInfos;
@@ -61,7 +63,6 @@ namespace Assets.__Game.Resources.Scripts.Spawners
         for (int i = 0; i < balloonInfo.Amount; i++)
         {
           Vector3 spawnPosition = _randomPositionGenerator.GetRandomXPosition();
-
           spawnPosition.y = _randomPositionGenerator.GetBottomYPosition() - _bottomOffset;
 
           BalloonController balloonController = Instantiate(
@@ -71,18 +72,20 @@ namespace Assets.__Game.Resources.Scripts.Spawners
 
           _spawnedBalloons.Add(balloonController);
 
-          balloonHandler.SetBalloonNumber(balloonInfo.BalloonNumber);
+          bool correct = ArrayContains(_correctNumbersContainerSo.CorrectNumbers, balloonInfo.BalloonNumber);
+
+          balloonHandler.SetBalloonDetails(balloonInfo.BalloonNumber, correct, _tutorial);
+
+          if (correct == true)
+            _correctNumbersBalloonHandlers.Add(balloonHandler);
+          else
+            _incorrectNumbersBalloonHandlers.Add(balloonHandler);
 
           float randomSpeed = Random.Range(_minMovementSpeed, _maxMovementSpeed);
 
           balloonMovement.SetMovementSpeed(randomSpeed);
           balloonMovement.SetMovementTarget(
               _randomPositionGenerator.GetRandomXPosition(), _randomPositionGenerator.GetTopYPosition(), _topOffset);
-
-          if (ArrayContains(_correctNumbersContainerSo.CorrectNumbers, balloonInfo.BalloonNumber))
-            _correctNumbersBalloonHandlers.Add(balloonHandler);
-          else
-            _incorrectNumbersBalloonHandlers.Add(balloonHandler);
         }
       }
 
@@ -130,12 +133,7 @@ namespace Assets.__Game.Resources.Scripts.Spawners
 
     private bool ArrayContains(int[] array, int number)
     {
-      foreach (int num in array)
-      {
-        if (num == number) return true;
-      }
-
-      return false;
+      return array.Contains(number);
     }
   }
 }
