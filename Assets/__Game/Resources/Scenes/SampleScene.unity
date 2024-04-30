@@ -404,24 +404,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a083591a0a6c6b499b9ca0c1eaaf0d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnRate: 1
+  _minSpawnRate: 1
+  _maxSpawnRate: 2
   _bottomOffset: 2.5
-  _minMovementSpeed: 2.5
-  _maxMovementSpeed: 5
+  _minMovementSpeed: 1.5
+  _maxMovementSpeed: 2.5
   _topOffset: 1.5
   _balloonSpawnInfos:
   - BalloonContainerSo: {fileID: 11400000, guid: a96dc79e5850e2640a99a1455e501715, type: 2}
-    BalloonNumber: 0
-    Amount: 2
+    BalloonNumber: 1
+    Amount: 1
   - BalloonContainerSo: {fileID: 11400000, guid: a96dc79e5850e2640a99a1455e501715, type: 2}
-    BalloonNumber: 0
-    Amount: 2
+    BalloonNumber: 2
+    Amount: 1
   - BalloonContainerSo: {fileID: 11400000, guid: a96dc79e5850e2640a99a1455e501715, type: 2}
-    BalloonNumber: 0
-    Amount: 2
+    BalloonNumber: 3
+    Amount: 1
   - BalloonContainerSo: {fileID: 11400000, guid: a96dc79e5850e2640a99a1455e501715, type: 2}
-    BalloonNumber: 0
-    Amount: 2
+    BalloonNumber: 4
+    Amount: 1
 --- !u!1 &1746051439
 GameObject:
   m_ObjectHideFlags: 0
@@ -677,6 +678,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _zPosition: 5
+  _scaleOffset: {x: 0.01, y: 0.01}
 --- !u!1 &2130881505
 GameObject:
   m_ObjectHideFlags: 0

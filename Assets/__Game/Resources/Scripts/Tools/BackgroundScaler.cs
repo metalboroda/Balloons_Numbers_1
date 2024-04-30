@@ -5,6 +5,7 @@ namespace Assets.__Game.Scripts.Tools
   public class BackgroundScaler : MonoBehaviour
   {
     [SerializeField] private float _zPosition = 5f;
+    [SerializeField] private Vector2 _scaleOffset = Vector2.zero;
 
     private SpriteRenderer _spriteRenderer;
     private Camera _mainCamera;
@@ -31,8 +32,8 @@ namespace Assets.__Game.Scripts.Tools
       float cameraHeight = 2f * _mainCamera.orthographicSize;
       float cameraWidth = cameraHeight * _mainCamera.aspect;
 
-      float scaleX = cameraWidth / spriteWidth;
-      float scaleY = cameraHeight / spriteHeight;
+      float scaleX = cameraWidth / spriteWidth + _scaleOffset.x;
+      float scaleY = cameraHeight / spriteHeight + _scaleOffset.y;
       float scale = Mathf.Max(scaleX, scaleY);
 
       transform.localScale = new Vector3(scale, scale, 1f);

@@ -6,5 +6,6 @@ namespace Assets.__Game.Resources.Scripts.Balloon
   {
     public BalloonHandler BalloonHandler;
     public BalloonMovement BalloonMovement;
+    public BalloonUiHandler BalloonUiHandler;
   }
 }
