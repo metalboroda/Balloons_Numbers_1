@@ -389,7 +389,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnRate: 1
   _bottomOffset: 2.5
-  _topOffset: 0
+  _minMovementSpeed: 2.5
+  _maxMovementSpeed: 5
+  _topOffset: 1.5
   _balloonSpawnInfos:
   - BalloonContainerSo: {fileID: 11400000, guid: a96dc79e5850e2640a99a1455e501715, type: 2}
     BalloonNumber: 0

@@ -1,3 +1,4 @@
+using Assets.__Game.Resources.Scripts.Balloon;
 using Assets.__Game.Resources.Scripts.SOs;
 using Assets.__Game.Resources.Scripts.Tools;
 using System.Collections;
@@ -12,6 +13,8 @@ namespace Assets.__Game.Resources.Scripts.Spawners
     [SerializeField] private float _spawnRate;
     [SerializeField] private float _bottomOffset;
     [Header("Movement")]
+    [SerializeField] private float _minMovementSpeed;
+    [SerializeField] private float _maxMovementSpeed;
     [SerializeField] private float _topOffset;
     [Space]
     [SerializeField] private BalloonSpawnInfo[] _balloonSpawnInfos;
@@ -70,10 +73,19 @@ namespace Assets.__Game.Resources.Scripts.Spawners
     private void SpawnBalloon(BalloonContainerSo balloonContainer)
     {
       Vector3 spawnPosition = _randomPositionGenerator.GetRandomXPosition();
+      float randomSpeed = Random.Range(_minMovementSpeed, _maxMovementSpeed);
 
       spawnPosition.y = _randomPositionGenerator.GetBottomYPosition() - _bottomOffset;
 
-      Instantiate(balloonContainer.GetRandomBalloon(), spawnPosition, Quaternion.identity);
+      BalloonController balloonController = Instantiate(
+        balloonContainer.GetRandomBalloon(), spawnPosition, Quaternion.identity).GetComponent<BalloonController>();
+      BalloonMovement balloonMovement = balloonController.BalloonMovement;
+
+
+      balloonMovement.SetMovementSpeed(randomSpeed);
+      balloonMovement.SetMovementTarget(
+        _randomPositionGenerator.GetRandomXPosition(), _randomPositionGenerator.GetTopYPosition(), _topOffset);
+      balloonMovement.MoveToTarget();
     }
   }
 }
