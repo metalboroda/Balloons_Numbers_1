@@ -18,8 +18,8 @@ namespace Assets.__Game.Resources.Scripts.Management
     [SerializeField] private AudioClip _buttonClip;
 
     [Header("Announcer")]
-    //[SerializeField] private AudioClip[] _winAnnouncerClips;
-    //[SerializeField] private AudioClip[] _loseAnnouncerClips;
+    [SerializeField] private AudioClip[] _winAnnouncerClips;
+    [SerializeField] private AudioClip[] _loseAnnouncerClips;
     [SerializeField] private AudioClip[] _stuporAnnouncerClips;
 
     private AudioSource _audioSource;
@@ -71,11 +71,11 @@ namespace Assets.__Game.Resources.Scripts.Management
           break;
         case GameWinState:
           _audioSource.PlayOneShot(_winScreenClip);
-          //_audioSource.PlayOneShot(_audioTool.GetRandomCLip(_winAnnouncerClips));
+          _audioSource.PlayOneShot(_audioTool.GetRandomCLip(_winAnnouncerClips));
           break;
         case GameLoseState:
           _audioSource.PlayOneShot(_loseScreenClip);
-          //_audioSource.PlayOneShot(_audioTool.GetRandomCLip(_loseAnnouncerClips));
+          _audioSource.PlayOneShot(_audioTool.GetRandomCLip(_loseAnnouncerClips));
           break;
         case GamePauseState:
           _audioSource.PlayOneShot(_pauseScreenClip);

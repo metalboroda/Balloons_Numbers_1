@@ -41,6 +41,9 @@ namespace Assets.__Game.Resources.Scripts.Management
     [Space]
     [SerializeField] private Button _winNextLevelBtn;
     [SerializeField] private Button _winRewardButton;
+    [SerializeField] private GameObject _winPerfectText;
+    [SerializeField] private ParticleSystem[] _winPerfectParticles;
+    [SerializeField] private AudioSource _winPerfectSound;
 
     [Header("Lose Canvas")]
     [SerializeField] private GameObject _loseCanvas;
@@ -150,8 +153,15 @@ namespace Assets.__Game.Resources.Scripts.Management
       });
       _winRewardButton.onClick.AddListener(() =>
       {
-        //_reward.OpenRandomWikipediaFishLink();
+        _winPerfectText.gameObject.SetActive(false);
         _winRewardButton.gameObject.SetActive(false);
+
+        foreach (var particle in _winPerfectParticles)
+        {
+          particle.gameObject.SetActive(false);
+        }
+
+        _winPerfectSound.gameObject.SetActive(false);
       });
 
       // Lose
@@ -316,6 +326,14 @@ namespace Assets.__Game.Resources.Scripts.Management
       if (_currentLoses > 0) return;
 
       //_winRewardButton.gameObject.SetActive(true);
+      _winPerfectText.gameObject.SetActive(true);
+
+      foreach (var particle in _winPerfectParticles)
+      {
+        particle.gameObject.SetActive(true);
+      }
+
+      _winPerfectSound.gameObject.SetActive(true);
     }
 
     private void SwitchAudioVolumeButton()

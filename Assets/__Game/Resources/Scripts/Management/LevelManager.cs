@@ -77,6 +77,7 @@ namespace Assets.__Game.Resources.Scripts.Management
     private void SetSavedLevel()
     {
       _currentLevelIndex = _gameSettings.LevelIndex;
+      _overallLevelIndex = _gameSettings.OverallLevelIndex;
     }
   }
 }

@@ -145,7 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _correctNumbersContainerSo: {fileID: 11400000, guid: 217846e4a1f878c439a55c7b1d7bf5f5, type: 2}
   _canGetLevelPoint: 0
-  _stuporTimeoutSeconds: 20
+  _stuporTimeoutSeconds: 30
 --- !u!1 &8974865717063345824
 GameObject:
   m_ObjectHideFlags: 0
