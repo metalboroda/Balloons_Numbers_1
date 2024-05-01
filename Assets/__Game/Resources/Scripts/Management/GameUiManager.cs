@@ -315,7 +315,7 @@ namespace Assets.__Game.Resources.Scripts.Management
     {
       if (_currentLoses > 0) return;
 
-      _winRewardButton.gameObject.SetActive(true);
+      //_winRewardButton.gameObject.SetActive(true);
     }
 
     private void SwitchAudioVolumeButton()
