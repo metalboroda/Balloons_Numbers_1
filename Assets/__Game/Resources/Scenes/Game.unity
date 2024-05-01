@@ -1599,8 +1599,17 @@ MonoBehaviour:
   _loseScreenClip: {fileID: 8300000, guid: cac067f14ac1b4e4a832b0f7b594b447, type: 3}
   _pauseScreenClip: {fileID: 8300000, guid: a0b594a1d84e5e84ab8fb38de5888bc7, type: 3}
   _buttonClip: {fileID: 8300000, guid: 769081b8e97fed14ba7f24c0386a7ba1, type: 3}
-  _winAnnouncerClips: []
-  _loseAnnouncerClips: []
+  _winAnnouncerClips:
+  - {fileID: 8300000, guid: 415019c34f4b59341994b0222e61ff03, type: 3}
+  - {fileID: 8300000, guid: fc576c5bf8ff8ff48be18de5b3135c53, type: 3}
+  - {fileID: 8300000, guid: 668c6fdb870edbf4283c788eeee121d3, type: 3}
+  - {fileID: 8300000, guid: b89429da6f34b4f4ab2e707c771d4ea6, type: 3}
+  - {fileID: 8300000, guid: bc0ebd6572ba71e4c8b4dab272e4a622, type: 3}
+  - {fileID: 8300000, guid: 499e829bc8d63c8449cb4f9a169b2d94, type: 3}
+  _loseAnnouncerClips:
+  - {fileID: 8300000, guid: 3903582ac7c319f4db8c19a429c3ffb2, type: 3}
+  - {fileID: 8300000, guid: fb0674ef8bbdf66428edeba72c0260c2, type: 3}
+  - {fileID: 8300000, guid: f3b8893ce4868bb4587810065aab3fac, type: 3}
   _stuporAnnouncerClips:
   - {fileID: 8300000, guid: 9036e48a1a7974f47a07dc139e1d4fc8, type: 3}
   - {fileID: 8300000, guid: ad2132597fcac874d8a3a028beaa982c, type: 3}
@@ -2332,7 +2341,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -150}
+  m_AnchoredPosition: {x: 0, y: -125}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1106577185
@@ -3077,7 +3086,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -150}
+  m_AnchoredPosition: {x: 0, y: -125}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1577673601
