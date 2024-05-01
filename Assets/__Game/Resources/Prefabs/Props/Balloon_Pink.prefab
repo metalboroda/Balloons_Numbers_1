@@ -55,6 +55,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Balloon_Pink
       objectReference: {fileID: 0}
+    - target: {fileID: 7159489841423785296, guid: cf06fcd620471e84abc927ed632da390, type: 3}
+      propertyPath: _bubblesParticlesPrefab
+      value: 
+      objectReference: {fileID: 977216909282048373, guid: 2e2811133d6fb6f4080e5796e167134e, type: 3}
     - target: {fileID: 7479798041815001823, guid: cf06fcd620471e84abc927ed632da390, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 

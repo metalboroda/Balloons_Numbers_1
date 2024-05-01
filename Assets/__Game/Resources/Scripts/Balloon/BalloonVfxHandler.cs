@@ -8,6 +8,7 @@ namespace Assets.__Game.Resources.Scripts.Balloon
     [SerializeField] private GameObject _bubblesParticlesPrefab;
     [SerializeField] private GameObject _starPrefab;
     [SerializeField] private GameObject _angryFaceParticlesPrefab;
+    [SerializeField] private Transform _particlesSpawnPoint;
 
     private EventBinding<EventStructs.BalloonDestroyEvent> _fishDestroyEvent;
 
@@ -31,7 +32,7 @@ namespace Assets.__Game.Resources.Scripts.Balloon
 
     private void SpawnParticle(GameObject prefab)
     {
-      Instantiate(prefab, transform.position, Quaternion.identity);
+      Instantiate(prefab, _particlesSpawnPoint.position, Quaternion.identity);
     }
   }
 }
