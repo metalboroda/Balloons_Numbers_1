@@ -25,15 +25,15 @@ namespace Assets.__Game.Resources.Scripts.Management
     [SerializeField] private GameObject _gameCanvas;
     [Space]
     [SerializeField] private TextMeshProUGUI _gameScoreCounterTxt;
-    [SerializeField] private GameObject _gameStarIcon;
+    [SerializeField] private GameObject _gameStarImage;
     [Space]
     [SerializeField] private TextMeshProUGUI _gameLoseCounterTxt;
-    [SerializeField] private GameObject _gameAngryFaceIcon;
+    [SerializeField] private GameObject _gameAngryFaceImage;
     [Space]
     [SerializeField] private Button _gamePauseButton;
-    [Space]
-    [SerializeField] private float _gameIconScaleIn = 1.3f;
-    [SerializeField] private float _gameIconAnimDuration = 0.15f;
+    [Header("Game Canvas Animation")]
+    [SerializeField] private float _gameImageeIn = 1.3f;
+    [SerializeField] private float _gameImageAnimDuration = 0.15f;
 
     [Header("Win Canvas")]
     [SerializeField] private GameObject _winCanvas;
@@ -54,13 +54,14 @@ namespace Assets.__Game.Resources.Scripts.Management
     [SerializeField] private Button _pauseRestartButton;
     [Space]
     [SerializeField] private Button _pauseAudioBtn;
-    [SerializeField] private GameObject _pauseAudioOnIcon;
-    [SerializeField] private GameObject _pauseAudioOffIcon;
+    [SerializeField] private GameObject _pauseAudioOnImage;
+    [SerializeField] private GameObject _pauseAudioOffImage;
 
     private readonly List<GameObject> _canvases = new();
     private int _currentScore;
     private int _overallScore;
     private int _currentLoses;
+    private bool _canAnimate = false;
 
     private GameBootstrapper _gameBootstrapper;
     private Reward _reward;
@@ -85,7 +86,7 @@ namespace Assets.__Game.Resources.Scripts.Management
       _stateChanged = new EventBinding<EventStructs.StateChanged>(SwitchCanvasesDependsOnState);
       _balloonSpawnerEvent = new EventBinding<EventStructs.BalloonSpawnerEvent>(SetOverallScore);
       _balloonReceivedEvent = new EventBinding<EventStructs.BalloonReceiveEvent>(DisplayScore);
-      _balloonReceivedEvent = new EventBinding<EventStructs.BalloonReceiveEvent>(DisplayCorrectNumbersArray);
+      _balloonReceivedEvent = new EventBinding<EventStructs.BalloonReceiveEvent>(DisplayCorrectValuesArray);
       _balloonReceivedEvent = new EventBinding<EventStructs.BalloonReceiveEvent>(IconScaleAnimation);
     }
 
@@ -95,7 +96,7 @@ namespace Assets.__Game.Resources.Scripts.Management
       _stateChanged.Remove(SwitchCanvasesDependsOnState);
       _balloonSpawnerEvent.Remove(SetOverallScore);
       _balloonReceivedEvent.Remove(DisplayScore);
-      _balloonReceivedEvent.Remove(DisplayCorrectNumbersArray);
+      _balloonReceivedEvent.Remove(DisplayCorrectValuesArray);
       _balloonReceivedEvent.Remove(IconScaleAnimation);
     }
 
@@ -104,6 +105,7 @@ namespace Assets.__Game.Resources.Scripts.Management
       SubscribeButtons();
       AddCanvasesToList();
       UpdateAudioButtonVisuals();
+      StartCoroutine(DoCanAnimate());
     }
 
     private void LoadSettings()
@@ -210,7 +212,7 @@ namespace Assets.__Game.Resources.Scripts.Management
       }
     }
 
-    private void DisplayCorrectNumbersArray(EventStructs.BalloonReceiveEvent balloonReceivedEvent)
+    private void DisplayCorrectValuesArray(EventStructs.BalloonReceiveEvent balloonReceivedEvent)
     {
       if (balloonReceivedEvent.CorrectValues == null) return;
 
@@ -218,7 +220,7 @@ namespace Assets.__Game.Resources.Scripts.Management
 
       for (int i = 0; i < balloonReceivedEvent.CorrectValues.Length; i++)
       {
-        arrayString += balloonReceivedEvent.CorrectValues[i].ToString();
+        arrayString += balloonReceivedEvent.CorrectValues[i];
 
         if (i < balloonReceivedEvent.CorrectValues.Length - 1)
           arrayString += " ";
@@ -230,16 +232,25 @@ namespace Assets.__Game.Resources.Scripts.Management
 
     private void IconScaleAnimation(EventStructs.BalloonReceiveEvent balloonReceivedEvent)
     {
+      if (_canAnimate == false) return;
+
       Sequence seq = DOTween.Sequence();
-      Transform icon = null;
+      Transform icon;
 
       if (balloonReceivedEvent.CorrectBalloon == true)
-        icon = _gameStarIcon.transform;
+        icon = _gameStarImage.transform;
       else
-        icon = _gameAngryFaceIcon.transform;
+        icon = _gameAngryFaceImage.transform;
 
-      seq.Append(icon.DOScale(_gameIconScaleIn, _gameIconAnimDuration));
-      seq.Append(icon.DOScale(1f, _gameIconAnimDuration));
+      seq.Append(icon.DOScale(_gameImageeIn, _gameImageAnimDuration));
+      seq.Append(icon.DOScale(1f, _gameImageAnimDuration));
+    }
+
+    private IEnumerator DoCanAnimate()
+    {
+      yield return new WaitForSeconds(1);
+
+      _canAnimate = true;
     }
 
     private void SwitchCanvasesDependsOnState(EventStructs.StateChanged state)
@@ -301,8 +312,8 @@ namespace Assets.__Game.Resources.Scripts.Management
 
     private void UpdateAudioButtonVisuals()
     {
-      _pauseAudioOnIcon.SetActive(_gameSettings.IsMusicOn);
-      _pauseAudioOffIcon.SetActive(!_gameSettings.IsMusicOn);
+      _pauseAudioOnImage.SetActive(_gameSettings.IsMusicOn);
+      _pauseAudioOffImage.SetActive(!_gameSettings.IsMusicOn);
     }
   }
 }

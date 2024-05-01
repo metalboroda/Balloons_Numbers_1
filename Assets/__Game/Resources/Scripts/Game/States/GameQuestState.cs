@@ -12,7 +12,7 @@ namespace Assets.__Game.Resources.Scripts.Game.States
 
     public override void Enter()
     {
-      Time.timeScale = 1f;
+      Time.timeScale = 0f;
     }
   }
 }

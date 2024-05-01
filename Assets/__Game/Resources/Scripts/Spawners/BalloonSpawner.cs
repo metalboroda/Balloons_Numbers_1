@@ -12,6 +12,7 @@ namespace Assets.__Game.Resources.Scripts.Spawners
   public class BalloonSpawner : MonoBehaviour
   {
     [Header("Spawn")]
+    [SerializeField] private float _firstSpawnDelay = 1.25f;
     [SerializeField] private float _minSpawnRate;
     [SerializeField] private float _maxSpawnRate;
     [Header("Movement")]
@@ -107,6 +108,8 @@ namespace Assets.__Game.Resources.Scripts.Spawners
 
     private IEnumerator DoActivateBalloonMovement()
     {
+      yield return new WaitForSeconds(_firstSpawnDelay);
+
       while (true)
       {
         List<BalloonController> availableBalloons = _spawnedBalloons.Except(_movingBalloons).ToList();
