@@ -29,6 +29,7 @@ namespace Assets.__Game.Resources.Scripts.Balloon
 
     private void ReceiveBumber(EventStructs.BalloonUiEvent balloonUiEvent)
     {
+      if (this == null) return;
       if (balloonUiEvent.BalloonId != transform.GetInstanceID()) return;
 
       _numberText.SetText(balloonUiEvent.BalloonValue.ToString());

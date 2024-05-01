@@ -15,6 +15,11 @@ namespace Assets.__Game.Resources.Scripts.Management
     [Space]
     [SerializeField] private AudioClip _buttonClip;
 
+    [Header("Announcer")]
+    [SerializeField] private AudioClip[] _winAnnouncerClips;
+    [SerializeField] private AudioClip[] _loseAnnouncerClips;
+    [SerializeField] private AudioClip[] _stuporAnnouncerClips;
+
     private AudioSource _audioSource;
 
     private AudioTool _audioTool;
@@ -43,8 +48,6 @@ namespace Assets.__Game.Resources.Scripts.Management
 
     private void PlayScreenSound(EventStructs.StateChanged state)
     {
-      _audioTool.RandomPitch();
-
       switch (state.State)
       {
         case GameQuestState:
@@ -52,9 +55,11 @@ namespace Assets.__Game.Resources.Scripts.Management
           break;
         case GameWinState:
           _audioSource.PlayOneShot(_winScreenClip);
+          _audioSource.PlayOneShot(_audioTool.GetRandomCLip(_winAnnouncerClips));
           break;
         case GameLoseState:
           _audioSource.PlayOneShot(_loseScreenClip);
+          _audioSource.PlayOneShot(_audioTool.GetRandomCLip(_loseAnnouncerClips));
           break;
         case GamePauseState:
           _audioSource.PlayOneShot(_pauseScreenClip);
@@ -66,6 +71,11 @@ namespace Assets.__Game.Resources.Scripts.Management
     {
       _audioTool.RandomPitch();
       _audioSource.PlayOneShot(_buttonClip);
+    }
+
+    private void PlayStuporSound()
+    {
+      _audioSource.PlayOneShot(_audioTool.GetRandomCLip(_stuporAnnouncerClips));
     }
   }
 }
