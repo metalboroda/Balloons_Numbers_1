@@ -1,7 +1,9 @@
-using __Game.Resources.Scripts.EventBus;
+﻿using __Game.Resources.Scripts.EventBus;
 using Assets.__Game.Resources.Scripts.Balloon;
+using Assets.__Game.Resources.Scripts.Game.States;
 using Assets.__Game.Resources.Scripts.SOs;
 using Assets.__Game.Scripts.Infrastructure;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,14 +14,18 @@ namespace Assets.__Game.Resources.Scripts.Management
     [SerializeField] private CorrectValuesContainerSo _correctNumbersContainerSo;
     [Space]
     [SerializeField] private bool _canGetLevelPoint = true;
+    [Header("Stupor param's")]
+    [SerializeField] private float _stuporTimeoutSeconds = 30f;
 
     private List<BalloonHandler> _correctBalloonNumbers = new();
     private List<BalloonHandler> _incorrectBalloonNumbers = new();
+    private Coroutine _stuporTimeoutRoutine;
 
     private EventBinding<EventStructs.BalloonSpawnerEvent> _balloonSpawnerEvent;
     private EventBinding<EventStructs.BalloonClickEvent> _balloonClickEvent;
 
     private GameBootstrapper _gameBootstrapper;
+
 
     private void Awake()
     {
@@ -44,6 +50,8 @@ namespace Assets.__Game.Resources.Scripts.Management
       {
         CorrectValues = _correctNumbersContainerSo.CorrectValues
       });
+
+      ResetAndStartStuporTimer();
     }
 
     private void AddBalloonesToList(EventStructs.BalloonSpawnerEvent balloonSpawnerEvent)
@@ -67,8 +75,6 @@ namespace Assets.__Game.Resources.Scripts.Management
             CorrectBalloonIncrement = 1
           });
 
-          Debug.Log("Correct");
-
           break;
         }
 
@@ -83,22 +89,20 @@ namespace Assets.__Game.Resources.Scripts.Management
             IncorrectBalloonIncrement = 1
           });
 
-          Debug.Log("Incorrect");
-
           break;
         }
       }
 
       CheckFishLists();
+      ResetAndStartStuporTimer();
     }
 
     private void CheckFishLists()
     {
-      //if (_gameBootstrapper == null) return;
+      if (_gameBootstrapper == null) return;
       if (_correctBalloonNumbers.Count == 0)
       {
-        //_gameBootstrapper.StateMachine.ChangeState(new GameWinState(_gameBootstrapper));
-        Debug.Log("Win");
+        _gameBootstrapper.StateMachine.ChangeState(new GameWinState(_gameBootstrapper));
 
         EventBus<EventStructs.LevelPointEvent>.Raise(new EventStructs.LevelPointEvent
         {
@@ -108,9 +112,25 @@ namespace Assets.__Game.Resources.Scripts.Management
 
       if (_incorrectBalloonNumbers.Count == 0)
       {
-        //_gameBootstrapper.StateMachine.ChangeState(new GameLoseState(_gameBootstrapper));
-        Debug.Log("Lose");
+        _gameBootstrapper.StateMachine.ChangeState(new GameLoseState(_gameBootstrapper));
       }
+    }
+
+    private void ResetAndStartStuporTimer()
+    {
+      if (_stuporTimeoutRoutine != null)
+        StopCoroutine(_stuporTimeoutRoutine);
+
+      _stuporTimeoutRoutine = StartCoroutine(DoStuporTimerCoroutine());
+    }
+
+    private IEnumerator DoStuporTimerCoroutine()
+    {
+      yield return new WaitForSeconds(_stuporTimeoutSeconds);
+
+      EventBus<EventStructs.StuporEvent>.Raise(new EventStructs.StuporEvent());
+
+      ResetAndStartStuporTimer();
     }
   }
 }

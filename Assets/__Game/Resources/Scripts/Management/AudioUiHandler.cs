@@ -26,6 +26,7 @@ namespace Assets.__Game.Resources.Scripts.Management
 
     private EventBinding<EventStructs.StateChanged> _stateEvent;
     private EventBinding<EventStructs.UiButtonEvent> _buttonEvent;
+    private EventBinding<EventStructs.StuporEvent> _stuporEvent;
 
     private void Awake()
     {
@@ -38,12 +39,14 @@ namespace Assets.__Game.Resources.Scripts.Management
     {
       _stateEvent = new EventBinding<EventStructs.StateChanged>(PlayScreenSound);
       _buttonEvent = new EventBinding<EventStructs.UiButtonEvent>(PlayButtonSound);
+      _stuporEvent = new EventBinding<EventStructs.StuporEvent>(PlayStuporSound);
     }
 
     private void OnDisable()
     {
       _stateEvent.Remove(PlayScreenSound);
       _buttonEvent.Remove(PlayButtonSound);
+      _stuporEvent.Remove(PlayStuporSound);
     }
 
     private void PlayScreenSound(EventStructs.StateChanged state)
@@ -73,7 +76,7 @@ namespace Assets.__Game.Resources.Scripts.Management
       _audioSource.PlayOneShot(_buttonClip);
     }
 
-    private void PlayStuporSound()
+    private void PlayStuporSound(EventStructs.StuporEvent stuporEvent)
     {
       _audioSource.PlayOneShot(_audioTool.GetRandomCLip(_stuporAnnouncerClips));
     }

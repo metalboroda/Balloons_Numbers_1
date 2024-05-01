@@ -13,6 +13,10 @@ namespace __Game.Resources.Scripts.EventBus
     }
     #endregion
 
+    #region Game
+    public struct StuporEvent : IEvent { }
+    #endregion
+
     #region BalloonSpawner
     public struct BalloonSpawnerEvent : IEvent
     {
@@ -68,6 +72,10 @@ namespace __Game.Resources.Scripts.EventBus
     #endregion
 
     #region Ui
+    public struct LevelCounterEvent : IEvent
+    {
+      public int OverallLevelIndex;
+    }
     public struct UiButtonEvent : IEvent
     {
       public UiEnums UiEnums;

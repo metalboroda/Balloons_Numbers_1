@@ -1,4 +1,4 @@
-using __Game.Resources.Scripts.EventBus;
+﻿using __Game.Resources.Scripts.EventBus;
 using Assets.__Game.Resources.Scripts.Game.States;
 using Assets.__Game.Resources.Scripts.LevelItem;
 using Assets.__Game.Resources.Scripts.Settings;
@@ -18,6 +18,7 @@ namespace Assets.__Game.Resources.Scripts.Management
     [Header("Quest Canvas")]
     [SerializeField] private GameObject _questCanvas;
     [Space]
+    [SerializeField] private TextMeshProUGUI _questLevelCounterText;
     [SerializeField] private TextMeshProUGUI _questCorrectNumbersTxt;
     [SerializeField] private Button _questPlayButton;
 
@@ -49,6 +50,7 @@ namespace Assets.__Game.Resources.Scripts.Management
     [Header("Pause Canvas")]
     [SerializeField] private GameObject _pauseCanvas;
     [Space]
+    [SerializeField] private TextMeshProUGUI _pauseLevelCounterText;
     [SerializeField] private TextMeshProUGUI _pauseCorrectNumbersTxt;
     [SerializeField] private Button _pauseContinueBtn;
     [SerializeField] private Button _pauseRestartButton;
@@ -212,6 +214,14 @@ namespace Assets.__Game.Resources.Scripts.Management
       }
     }
 
+    private void DisplayLevelCounter()
+    {
+      if (_gameSettings.OverallLevelIndex == 0)
+        _questLevelCounterText.text = $"НАВЧАЛЬНИЙ РІВЕНЬ";
+      else
+        _questLevelCounterText.text = $"РІВЕНЬ {_gameSettings.OverallLevelIndex}";
+    }
+
     private void DisplayCorrectValuesArray(EventStructs.BalloonReceiveEvent balloonReceivedEvent)
     {
       if (balloonReceivedEvent.CorrectValues == null) return;
@@ -226,8 +236,15 @@ namespace Assets.__Game.Resources.Scripts.Management
           arrayString += " ";
       }
 
+      if (_gameSettings.OverallLevelIndex == 0)
+        _pauseLevelCounterText.text = $"НАВЧАЛЬНИЙ РІВЕНЬ";
+      else
+        _pauseLevelCounterText.text = $"РІВЕНЬ {_gameSettings.OverallLevelIndex}";
+
       _questCorrectNumbersTxt.text = arrayString;
       _pauseCorrectNumbersTxt.text = arrayString;
+
+      DisplayLevelCounter();
     }
 
     private void IconScaleAnimation(EventStructs.BalloonReceiveEvent balloonReceivedEvent)
