@@ -58,5 +58,12 @@ namespace __Game.Resources.Scripts.EventBus
       public bool Correct;
     }
     #endregion
+
+    #region ScoreManager
+    public struct LevelPointEvent : IEvent
+    {
+      public int LevelPoint;
+    }
+    #endregion
   }
 }

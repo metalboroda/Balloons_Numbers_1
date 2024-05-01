@@ -10,6 +10,8 @@ namespace Assets.__Game.Resources.Scripts.Management
   public class BalloonManager : MonoBehaviour
   {
     [SerializeField] private CorrectValuesContainerSo _correctNumbersContainerSo;
+    [Space]
+    [SerializeField] private bool _canGetLevelPoint = true;
 
     private List<BalloonHandler> _correctBalloonNumbers = new();
     private List<BalloonHandler> _incorrectBalloonNumbers = new();
@@ -97,6 +99,11 @@ namespace Assets.__Game.Resources.Scripts.Management
       {
         //_gameBootstrapper.StateMachine.ChangeState(new GameWinState(_gameBootstrapper));
         Debug.Log("Win");
+
+        EventBus<EventStructs.LevelPointEvent>.Raise(new EventStructs.LevelPointEvent
+        {
+          LevelPoint = 1
+        });
       }
 
       if (_incorrectBalloonNumbers.Count == 0)
