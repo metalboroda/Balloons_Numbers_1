@@ -12,6 +12,20 @@ namespace Assets.__Game.Scripts.Infrastructure
       SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
     }
 
+    public void LoadSceneWithDelay(string sceneName, float delay, MonoBehaviour mono, Action callback)
+    {
+      mono.StartCoroutine(DoLoadSceneWithDelay(sceneName, delay, callback));
+    }
+
+    private IEnumerator DoLoadSceneWithDelay(string sceneName, float delay, Action callback)
+    {
+      yield return new WaitForSeconds(delay);
+
+      SceneManager.LoadScene(sceneName, LoadSceneMode.Single);
+      callback?.Invoke();
+    }
+
+
     public void LoadSceneAsync(string sceneName, Action callback)
     {
       SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Single).completed += (AsyncOperation asyncOp) =>

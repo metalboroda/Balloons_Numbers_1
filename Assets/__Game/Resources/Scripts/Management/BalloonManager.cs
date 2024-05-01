@@ -1,7 +1,7 @@
 using __Game.Resources.Scripts.EventBus;
 using Assets.__Game.Resources.Scripts.Balloon;
-using Assets.__Game.Resources.Scripts.Infrastructure;
 using Assets.__Game.Resources.Scripts.SOs;
+using Assets.__Game.Scripts.Infrastructure;
 using System.Collections.Generic;
 using UnityEngine;
 

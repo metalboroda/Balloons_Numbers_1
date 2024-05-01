@@ -1,4 +1,5 @@
 using Assets.__Game.Resources.Scripts.Balloon;
+using Assets.__Game.Scripts.Enums;
 using System.Collections.Generic;
 
 namespace __Game.Resources.Scripts.EventBus
@@ -63,6 +64,24 @@ namespace __Game.Resources.Scripts.EventBus
     public struct LevelPointEvent : IEvent
     {
       public int LevelPoint;
+    }
+    #endregion
+
+    #region Ui
+    public struct UiButtonEvent : IEvent
+    {
+      public UiEnums UiEnums;
+    }
+    #endregion
+
+    #region Audio
+    public struct AudioSwitchedEvent : IEvent { }
+    #endregion
+
+    #region Components
+    public struct ComponentEvent<T> : IEvent
+    {
+      public T Data { get; set; }
     }
     #endregion
   }
