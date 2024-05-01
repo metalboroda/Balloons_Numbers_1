@@ -12,6 +12,22 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8974865717205484391, guid: a454cc821da5e1b419971d0230763865, type: 3}
+      propertyPath: _maxSpawnRate
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 8974865717205484391, guid: a454cc821da5e1b419971d0230763865, type: 3}
+      propertyPath: _minSpawnRate
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 8974865717205484391, guid: a454cc821da5e1b419971d0230763865, type: 3}
+      propertyPath: _maxMovementSpeed
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8974865717205484391, guid: a454cc821da5e1b419971d0230763865, type: 3}
+      propertyPath: _minMovementSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 8974865717205484391, guid: a454cc821da5e1b419971d0230763865, type: 3}
       propertyPath: _balloonSpawnInfos.Array.size
       value: 4
       objectReference: {fileID: 0}

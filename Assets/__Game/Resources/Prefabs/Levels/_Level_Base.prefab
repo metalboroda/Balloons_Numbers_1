@@ -253,9 +253,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a083591a0a6c6b499b9ca0c1eaaf0d3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _firstSpawnDelay: 1.25
+  _firstSpawnDelay: 1
   _minSpawnRate: 1
-  _maxSpawnRate: 2
+  _maxSpawnRate: 1.5
   _minMovementSpeed: 1.5
   _maxMovementSpeed: 2.5
   _topOffset: 1.5
