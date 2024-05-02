@@ -41,19 +41,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8974865717205484391, guid: a454cc821da5e1b419971d0230763865, type: 3}
       propertyPath: _balloonSpawnInfos.Array.data[2].Amount
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8974865717205484391, guid: a454cc821da5e1b419971d0230763865, type: 3}
       propertyPath: _balloonSpawnInfos.Array.data[3].Amount
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8974865717205484391, guid: a454cc821da5e1b419971d0230763865, type: 3}
       propertyPath: _balloonSpawnInfos.Array.data[2].BalloonValue
-      value: 5
+      value: "\u0410"
       objectReference: {fileID: 0}
     - target: {fileID: 8974865717205484391, guid: a454cc821da5e1b419971d0230763865, type: 3}
       propertyPath: _balloonSpawnInfos.Array.data[3].BalloonValue
-      value: 6
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8974865717205484391, guid: a454cc821da5e1b419971d0230763865, type: 3}
       propertyPath: _balloonSpawnInfos.Array.data[4].BalloonValue
