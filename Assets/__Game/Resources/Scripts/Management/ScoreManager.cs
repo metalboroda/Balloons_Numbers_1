@@ -5,7 +5,8 @@ namespace Assets.__Game.Resources.Scripts.Management
 {
   public class ScoreManager : MonoBehaviour
   {
-    private int _levelPointsCounter;
+    public int LevelPointsCounter { get; private set; }
+
 
     private EventBinding<EventStructs.LevelPointEvent> _levelPointEventBinding;
 
@@ -21,7 +22,7 @@ namespace Assets.__Game.Resources.Scripts.Management
 
     private void ReceiveLevelPoint(EventStructs.LevelPointEvent levelPointEvent)
     {
-      _levelPointsCounter += levelPointEvent.LevelPoint;
+      LevelPointsCounter += levelPointEvent.LevelPoint;
     }
   }
 }

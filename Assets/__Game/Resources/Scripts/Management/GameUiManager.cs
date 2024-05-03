@@ -230,6 +230,11 @@ namespace Assets.__Game.Resources.Scripts.Management
         _questLevelCounterText.text = $"НАВЧАЛЬНИЙ РІВЕНЬ";
       else
         _questLevelCounterText.text = $"РІВЕНЬ {_gameSettings.OverallLevelIndex}";
+
+      if (_gameSettings.OverallLevelIndex == 0)
+        _pauseLevelCounterText.text = $"НАВЧАЛЬНИЙ РІВЕНЬ";
+      else
+        _pauseLevelCounterText.text = $"РІВЕНЬ {_gameSettings.OverallLevelIndex}";
     }
 
     private void DisplayCorrectValuesArray(EventStructs.BalloonReceiveEvent balloonReceivedEvent)
@@ -246,15 +251,10 @@ namespace Assets.__Game.Resources.Scripts.Management
           arrayString += " ";
       }
 
-      if (_gameSettings.OverallLevelIndex == 0)
-        _pauseLevelCounterText.text = $"НАВЧАЛЬНИЙ РІВЕНЬ";
-      else
-        _pauseLevelCounterText.text = $"РІВЕНЬ {_gameSettings.OverallLevelIndex}";
+      DisplayLevelCounter();
 
       _questCorrectNumbersTxt.text = arrayString;
       _pauseCorrectNumbersTxt.text = arrayString;
-
-      DisplayLevelCounter();
     }
 
     private void IconScaleAnimation(EventStructs.BalloonReceiveEvent balloonReceivedEvent)
