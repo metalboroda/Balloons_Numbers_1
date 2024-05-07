@@ -8,9 +8,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 8974865716766051753, guid: a454cc821da5e1b419971d0230763865, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 21300000, guid: 6c9e64e0aea73ee429194102ca9e5ef2, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8974865716886592433, guid: a454cc821da5e1b419971d0230763865, type: 3}
       propertyPath: _correctNumbersContainerSo
       value: 
