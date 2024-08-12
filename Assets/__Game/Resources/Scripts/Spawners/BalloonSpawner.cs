@@ -35,34 +35,27 @@ namespace Assets.__Game.Resources.Scripts.Spawners
 
     private EventBinding<EventStructs.BalloonReMovementEvent> _balloonReMovementEvent;
 
-    private void Awake()
-    {
+    private void Awake() {
       _randomPositionGenerator = new RandomScreenPositionGenerator(Camera.main);
 
       SpawnAllBalloons();
     }
 
-    private void OnEnable()
-    {
+    private void OnEnable() {
       _balloonReMovementEvent = new EventBinding<EventStructs.BalloonReMovementEvent>(RemoveFromMovingBalloons);
     }
 
-    private void OnDisable()
-    {
+    private void OnDisable() {
       _balloonReMovementEvent.Remove(RemoveFromMovingBalloons);
     }
 
-    private void Start()
-    {
+    private void Start() {
       StartCoroutine(DoActivateBalloonMovement());
     }
 
-    private void SpawnAllBalloons()
-    {
-      foreach (var balloonInfo in _balloonSpawnInfos)
-      {
-        for (int i = 0; i < balloonInfo.Amount; i++)
-        {
+    private void SpawnAllBalloons() {
+      foreach (var balloonInfo in _balloonSpawnInfos) {
+        for (int i = 0; i < balloonInfo.Amount; i++) {
           Vector3 spawnPosition = _randomPositionGenerator.GetRandomXPosition();
           spawnPosition.y = _randomPositionGenerator.GetBottomYPosition() - _bottomOffset;
 
@@ -93,12 +86,10 @@ namespace Assets.__Game.Resources.Scripts.Spawners
       StartCoroutine(DoRaiseBalloonSpawnedEvent());
     }
 
-    private IEnumerator DoRaiseBalloonSpawnedEvent()
-    {
+    private IEnumerator DoRaiseBalloonSpawnedEvent() {
       yield return new WaitForEndOfFrame();
 
-      EventBus<EventStructs.BalloonSpawnerEvent>.Raise(new EventStructs.BalloonSpawnerEvent
-      {
+      EventBus<EventStructs.BalloonSpawnerEvent>.Raise(new EventStructs.BalloonSpawnerEvent {
         CorrectBalloonHandlers = _correctNumbersBalloonHandlers,
         CorrectBalloonCount = _correctNumbersBalloonHandlers.Count,
         IncorrectBalloonhHandlers = _incorrectNumbersBalloonHandlers,
@@ -106,18 +97,28 @@ namespace Assets.__Game.Resources.Scripts.Spawners
       });
     }
 
-    private IEnumerator DoActivateBalloonMovement()
-    {
+    private IEnumerator DoActivateBalloonMovement() {
       yield return new WaitForSeconds(_firstSpawnDelay);
 
-      while (true)
-      {
-        List<BalloonController> availableBalloons = _spawnedBalloons.Except(_movingBalloons).ToList();
+      while (true) {
+        List<BalloonController> availableCorrectBalloons = _correctNumbersBalloonHandlers
+            .Select(handler => handler.GetComponent<BalloonController>())
+            .Except(_movingBalloons).ToList();
 
-        if (availableBalloons.Count > 0)
-        {
-          int randomIndex = Random.Range(0, availableBalloons.Count);
-          BalloonController selectedBalloon = availableBalloons[randomIndex];
+        List<BalloonController> availableIncorrectBalloons = _incorrectNumbersBalloonHandlers
+            .Select(handler => handler.GetComponent<BalloonController>())
+            .Except(_movingBalloons).ToList();
+
+        if (availableCorrectBalloons.Count > 0) {
+          int randomIndex = Random.Range(0, availableCorrectBalloons.Count);
+          BalloonController selectedBalloon = availableCorrectBalloons[randomIndex];
+
+          _movingBalloons.Add(selectedBalloon);
+          selectedBalloon.BalloonMovement.MoveToTarget();
+        }
+        else if (availableIncorrectBalloons.Count > 0) {
+          int randomIndex = Random.Range(0, availableIncorrectBalloons.Count);
+          BalloonController selectedBalloon = availableIncorrectBalloons[randomIndex];
 
           _movingBalloons.Add(selectedBalloon);
           selectedBalloon.BalloonMovement.MoveToTarget();
@@ -129,13 +130,11 @@ namespace Assets.__Game.Resources.Scripts.Spawners
       }
     }
 
-    private void RemoveFromMovingBalloons(EventStructs.BalloonReMovementEvent balloonReMovementEvent)
-    {
+    private void RemoveFromMovingBalloons(EventStructs.BalloonReMovementEvent balloonReMovementEvent) {
       _movingBalloons.Remove(balloonReMovementEvent.BalloonController);
     }
 
-    private bool ArrayContains(string[] array, string value)
-    {
+    private bool ArrayContains(string[] array, string value) {
       return array.Contains(value);
     }
   }
