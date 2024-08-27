@@ -101,13 +101,19 @@ namespace Assets.__Game.Resources.Scripts.Spawners
       yield return new WaitForSeconds(_firstSpawnDelay);
 
       while (true) {
+        _correctNumbersBalloonHandlers = _correctNumbersBalloonHandlers.Where(handler => handler != null).ToList();
+        _incorrectNumbersBalloonHandlers = _incorrectNumbersBalloonHandlers.Where(handler => handler != null).ToList();
+        _movingBalloons = _movingBalloons.Where(balloon => balloon != null).ToList();
+
         List<BalloonController> availableCorrectBalloons = _correctNumbersBalloonHandlers
-            .Select(handler => handler.GetComponent<BalloonController>())
-            .Except(_movingBalloons).ToList();
+            .Select(handler => handler?.GetComponent<BalloonController>())
+            .Where(controller => controller != null && !_movingBalloons.Contains(controller))
+            .ToList();
 
         List<BalloonController> availableIncorrectBalloons = _incorrectNumbersBalloonHandlers
-            .Select(handler => handler.GetComponent<BalloonController>())
-            .Except(_movingBalloons).ToList();
+            .Select(handler => handler?.GetComponent<BalloonController>())
+            .Where(controller => controller != null && !_movingBalloons.Contains(controller))
+            .ToList();
 
         if (availableCorrectBalloons.Count > 0) {
           int randomIndex = Random.Range(0, availableCorrectBalloons.Count);
